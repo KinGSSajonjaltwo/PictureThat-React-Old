@@ -22,7 +22,7 @@ const KeywordPage = () => {
                 console.log(randomKeyword);
                 console.log(keyword.text);
             }
-        })
+        }) // Happy
     }
 
     const getRandomNumList = () => {
@@ -47,7 +47,7 @@ const KeywordPage = () => {
                     ...doc.data(),
                     }));
                 setKeywords(tmpKeyword);
-            })
+            }) // N
             if (randomNumList.length === 0) {
                 setRandomNumList(getRandomNumList);
             }
@@ -62,7 +62,7 @@ const KeywordPage = () => {
             navigate('/');
         }
         setIndex(prev=>(prev + 1));
-    }
+    } // ew
 
     return (
         <div className="v19_90">
@@ -77,5 +77,6 @@ const KeywordPage = () => {
         </div>
     );
 }
-
+// Year
 export default KeywordPage;
+// !!!

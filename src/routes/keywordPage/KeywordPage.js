@@ -8,21 +8,19 @@ import './KeywordPage.css'
 const KeywordPage = () => {
     const [index, setIndex] = useState(1);
     const [randomKeyword, setRandomKeyword] = useState("...");
+    const [tmpRandomKeyword, setTmpRandomKeyword] = useState("...");
     const [keywords, setKeywords] = useState([]);
     const navigate = useNavigate();
     let count = 15;
+    const [animationFinFlag, setAnimationFinFlag] = useState(false);
     let oneSetCount = 20;
     const [randomNumList, setRandomNumList] = useState([]);
     const mounted = useRef(false);
 
     const setRandomKeywordFromId = (id) => {
-        console.log('start');
         keywords.forEach((keyword) => {
-            console.log(keyword.id);
             if (keyword.id === id) {
-                setRandomKeyword(keyword.text);
-                console.log(randomKeyword);
-                console.log(keyword.text);
+                setTmpRandomKeyword(keyword.text);
             }
         }) 
     }
@@ -54,10 +52,22 @@ const KeywordPage = () => {
                 setRandomNumList(getRandomNumList);
             }
         } else {
-            console.log(keywords);
             setRandomKeywordFromId(randomNumList[index - 1]);
         }
     }, [index, randomNumList, keywords]);
+
+    useEffect(() => {
+        console.log('2');
+        if (!mounted.current) {
+            mounted.current = true;
+        } else {
+            if (animationFinFlag === true) {
+                console.log('1');
+                setAnimationFinFlag(false);
+                setRandomKeyword(tmpRandomKeyword);
+            }
+        }
+    }, [animationFinFlag]);
 
     const clickNext = (event) => {
         if (index >= 20) {
@@ -70,6 +80,7 @@ const KeywordPage = () => {
 
         setTimeout(() => {
             card.style.animation = "";
+            setAnimationFinFlag(true);
         }, 400)
     }
 
@@ -77,12 +88,13 @@ const KeywordPage = () => {
         if (index <= 0) {
             return;
         }
-        let card = document.querySelector(".card:last-child");
+        let card = document.querySelector(".card:first-child");
         card.style.animation = "swapPrev 400ms forwards";
         setIndex(prev=>(prev - 1));
         
         setTimeout(() => {
             card.style.animation = "";
+            setAnimationFinFlag(true);
         }, 400)
     } 
 
@@ -90,11 +102,11 @@ const KeywordPage = () => {
         <>
             <div className="stack" onClick={clickNext}>
         
-                <div className="card"></div>
+                <div className="card">{tmpRandomKeyword}</div>
                 
                 <div className="card"></div>
                 
-                <div className="card">{randomKeyword}</div>
+                <div className="card">{tmpRandomKeyword}</div>
                 
                 <div className="card">{randomKeyword}</div>
 

@@ -1,0 +1,122 @@
+*, 
+*::before,
+*::after{
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html,
+body{
+  height: 100%;
+  width: 100%;
+  max-width: 100%;
+  max-height: 100%;
+  overflow-x: hidden;
+
+}
+
+body{
+  display: grid;
+  justify-content: center;
+  align-items: center;
+  background-color: #FFF0ED;
+}
+
+.stack {
+  width: 500px;
+  height: 500px;
+  position: relative;
+}
+
+
+.card{
+  background-color: #6E6E6D;
+  width: 300px;
+  min-height: 360px;
+  position: absolute;
+
+  /* 좌측 상단 기준 이동이라 왼쪽 오른쪽 50%씩 card의 절반씩 이동 */
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  display: grid;
+  justify-content: center;
+  align-items: center;
+  border-radius: 16px;
+  font-size: 28px;
+  color: #FAD0C9;
+  box-shadow: 0 5px 5px 0 #00000040,0 10px 20px 0 #00000040;
+
+  transition: transform 200ms;
+}
+
+.card:nth-last-child(n+4){
+  --y: calc(-50% - 30px);
+  transform: translate(-50%, var(--y)) scale(0.9);
+  box-shadow: 0 0 1px 1px #00000003;
+}
+
+.card:nth-last-child(3){
+  --y: calc(-50% - 15px);
+  transform: translate(-50%, var(--y)) scale(0.95);
+}
+
+.card:nth-last-child(2){
+  --y: calc(-50% );
+  transform: translate(-50%, var(--y)) scale(1);
+}
+
+.card:nth-last-child(1){
+  --y: calc(-50% + 15px);
+  transform: translate(-50%, var(--y)) scale(1.05);
+}
+
+/* 모바일웹에서 버벅거림이 너무 심함 */
+@keyframes swapNext {
+  50% {
+    transform: translate(-50%, calc(-170%)) scale(0.85);
+    animation-timing-function: ease-in;
+  }
+  100% {
+    transform: translate(-50%, calc(var(--y) - 15px)) scale(0.85);
+    z-index: -1;
+  }
+}
+
+@keyframes swapPrev {
+  50% {
+    transform: translate(-50%, calc(-170%)) scale(0.9);
+    animation-timing-function: ease-in;
+  }
+  100% {
+    transform: translate(-50%, var(--y)) scale(1.06);
+    z-index: +100;
+  }
+}
+
+@keyframes swapBack {
+  100% {
+    animation-timing-function: ease-in;
+    transform: translate(-50%, calc(-50%)) scale(1);
+  }
+}
+
+
+.control{
+  position: relative;
+  display: flex;
+  justify-content: space-between;
+}
+
+
+.controlBtn{
+  width: 25%;
+  height: 50px;
+  background-color: #6E6E6D;
+  color: #FAD0C9;
+  display: grid;
+  justify-content: center;
+  align-items: center;
+  border-radius: 5px;
+}

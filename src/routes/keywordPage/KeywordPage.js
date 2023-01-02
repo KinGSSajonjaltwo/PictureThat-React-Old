@@ -2,6 +2,7 @@ import { dbService } from "fBase";
 import { collection, onSnapshot } from "firebase/firestore";
 import React, { useEffect, useRef, useState } from "react"
 import { useNavigate } from "react-router-dom";
+import { swap, swapNext, swapPrev } from "./cardSwap";
 import './KeywordPage.css'
 
 const KeywordPage = () => {
@@ -10,6 +11,7 @@ const KeywordPage = () => {
     const [keywords, setKeywords] = useState([]);
     const navigate = useNavigate();
     let count = 15;
+    let oneSetCount = 20;
     const [randomNumList, setRandomNumList] = useState([]);
     const mounted = useRef(false);
 
@@ -22,14 +24,14 @@ const KeywordPage = () => {
                 console.log(randomKeyword);
                 console.log(keyword.text);
             }
-        }) // Happy
+        }) 
     }
 
     const getRandomNumList = () => {
         const numbers = Array(count).fill().map((item, index) => index + 1);
         const random = []; // 랜덤으로 추출된 숫자를 담을 배열
  
-        for (let i = 0; i < 8; i++) { // numbers 배열에서 하나씩 추출되면서 제거되므로 numbers가 1개 있을 때까지 반복문을 돌린다.
+        for (let i = 0; i < oneSetCount; i++) { // numbers 배열에서 하나씩 추출되면서 제거되므로 numbers가 1개 있을 때까지 반복문을 돌린다.
             const num = Math.floor(Math.random() * numbers.length); // 첫번째 랜덤 숫자 범위 : 1 <= x <= 45이므로, Math.random() * (45 - 1 + 1) = Math.random() * 45
             const newArr = numbers.splice(num, 1); // numbers 배열에서 해당 랜덤 넘버 추출
             const value = newArr[0]; // numbers는 배열이므로 요소 값만 추출해 변수에 담는다.
@@ -47,7 +49,7 @@ const KeywordPage = () => {
                     ...doc.data(),
                     }));
                 setKeywords(tmpKeyword);
-            }) // N
+            }) 
             if (randomNumList.length === 0) {
                 setRandomNumList(getRandomNumList);
             }
@@ -57,26 +59,55 @@ const KeywordPage = () => {
         }
     }, [index, randomNumList, keywords]);
 
-    const onClick = (event) => {
-        if (index >= 8) {
+    const clickNext = (event) => {
+        if (index >= 20) {
+            return;
             navigate('/');
         }
+        let card = document.querySelector(".card:last-child");
+        card.style.animation = "swapNext 400ms forwards";
         setIndex(prev=>(prev + 1));
-    } // ew
+
+        setTimeout(() => {
+            card.style.animation = "";
+        }, 400)
+    }
+
+    const clickPrev = (event) => {
+        if (index <= 0) {
+            return;
+        }
+        let card = document.querySelector(".card:last-child");
+        card.style.animation = "swapPrev 400ms forwards";
+        setIndex(prev=>(prev - 1));
+        
+        setTimeout(() => {
+            card.style.animation = "";
+        }, 400)
+    } 
 
     return (
-        <div className="v19_90">
-            <div className="v19_91">
-                <div className="v19_92" />
-                <span className="v19_93">{index}/8</span>
+        <>
+            <div className="stack" onClick={clickNext}>
+        
+                <div className="card"></div>
+                
+                <div className="card"></div>
+                
+                <div className="card">{randomKeyword}</div>
+                
+                <div className="card">{randomKeyword}</div>
+
             </div>
-            <div className="v19_94" onClick={onClick}>
-                <div className="v19_95" />
-                <span className="v19_96">{randomKeyword}</span>
+        
+            <div className = "control">
+                <span className = "controlBtn" id="prevBtn" onClick={clickPrev}>앞에 뭐였지?</span>
+                <span className = "controlBtn" id="flipBtn" onClick={swap}>{index}</span>
+                <span className = "controlBtn" id="nextBtn" onClick={clickNext}>다음~</span>
             </div>
-        </div>
+        </>
     );
 }
-// Year
+
 export default KeywordPage;
-// !!!
+

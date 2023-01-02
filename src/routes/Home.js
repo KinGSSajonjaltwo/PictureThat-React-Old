@@ -6,9 +6,11 @@ const Home = () => {
     return (
         <section>
                 <div>
-                    <button className ="link_button">
-                        <Link className = "link" to="./keyword/" >Poca1</Link>
-                    </button>
+                    <Link to="./keyword/" >
+                        <button className ="link_button">
+                            <div className="link">Poca1</div>
+                        </button>
+                    </Link>
                 </div>
         </section>
     );

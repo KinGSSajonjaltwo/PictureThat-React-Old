@@ -2,7 +2,7 @@ import React from "react";
 import {BrowserRouter as Router, Route, Routes} from "react-router-dom";
 import Admin from "routes/Admin";
 import Home from "routes/Home";
-import KeywordPage from "routes/KeywordPage";
+import KeywordPage from "routes//keywordPage/KeywordPage";
 
 const AppRouter = () => {
     return (

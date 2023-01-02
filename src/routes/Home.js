@@ -4,20 +4,13 @@ import './Home.css'
 
 const Home = () => {
     return (
-        <div className="bodyScreen">
-            <Link to="/keyword">
-                <div className="buttonPos1">
-                    <div className="buttonStyle">
-                    </div>
-                    <span className="buttonText">키워드</span>
+        <section>
+                <div>
+                    <button className ="link_button">
+                        <Link className = "link" to="./keyword/" >Poca1</Link>
+                    </button>
                 </div>
-            </Link>
-            <div className="buttonPos2">
-                <div className="buttonStyle">
-                </div>
-                <span className="buttonText">사진</span>
-            </div>
-        </div> 
+        </section>
     );
 }
 
